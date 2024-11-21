@@ -32,9 +32,8 @@ import com.example.uipj.ui.activities.learn.LearnActivity;
 import com.example.uipj.ui.activities.learn.QuizActivity;
 import com.kennyc.bottomsheet.BottomSheetListener;
 import com.kennyc.bottomsheet.BottomSheetMenuDialogFragment;
-import com.saadahmedsoft.popupdialog.PopupDialog;
-import com.saadahmedsoft.popupdialog.Styles;
-import com.saadahmedsoft.popupdialog.listener.OnDialogButtonClickListener;
+import com.saadahmedev.popupdialog.PopupDialog;
+import com.saadahmedev.popupdialog.listener.StandardDialogActionListener;
 import com.squareup.picasso.Picasso;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -156,56 +155,40 @@ public class ViewSetActivity extends AppCompatActivity {
 
     private void showReviewErrorDialog() {
         PopupDialog.getInstance(this)
-                .setStyle(Styles.FAILED)
+                .statusDialogBuilder()
+                .createErrorDialog()
                 .setHeading(getString(R.string.error))
                 .setDescription(getString(R.string.learn_error))
-                .setDismissButtonText(getString(R.string.ok))
-                .setCancelable(true)
-                .showDialog(new OnDialogButtonClickListener() {
-                    @Override
-                    public void onDismissClicked(Dialog dialog) {
-                        super.onDismissClicked(dialog);
-                        dialog.dismiss();
-                    }
-                });
+                .build(Dialog::dismiss)
+                .show();
     }
 
     private void showLearnErrorDialog() {
         PopupDialog.getInstance(this)
-                .setStyle(Styles.STANDARD)
+                .standardDialogBuilder()
+                .createStandardDialog()
                 .setHeading(getString(R.string.error))
                 .setDescription(getString(R.string.review_error))
-                .setPopupDialogIcon(R.drawable.baseline_error_24)
-                .setDismissButtonText(getString(R.string.ok))
-                .setNegativeButtonText(getString(R.string.cancel))
-                .setPositiveButtonText(getString(R.string.ok))
-                .setCancelable(true)
-                .showDialog(new OnDialogButtonClickListener() {
+                .setIcon(R.drawable.baseline_error_24)
+                .build(new StandardDialogActionListener() {
                     @Override
-                    public void onNegativeClicked(Dialog dialog) {
-                        super.onNegativeClicked(dialog);
-                    }
-
-                    @Override
-                    public void onPositiveClicked(Dialog dialog) {
-                        super.onPositiveClicked(dialog);
+                    public void onPositiveButtonClicked(Dialog dialog) {
                         copyFlashCard();
                         PopupDialog.getInstance(ViewSetActivity.this)
-                                .setStyle(Styles.SUCCESS)
+                                .statusDialogBuilder()
+                                .createSuccessDialog()
                                 .setHeading(getString(R.string.success))
                                 .setDescription(getString(R.string.review_success))
-                                .setCancelable(false)
-                                .setDismissButtonText(getString(R.string.view))
-                                .showDialog(new OnDialogButtonClickListener() {
-                                    @Override
-                                    public void onDismissClicked(Dialog dialog) {
-                                        super.onDismissClicked(dialog);
-                                        dialog.dismiss();
-                                    }
-                                });
+                                .build(Dialog::dismiss)
+                                .show();
                     }
-                });
 
+                    @Override
+                    public void onNegativeButtonClicked(Dialog dialog) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
 
@@ -391,54 +374,43 @@ public class ViewSetActivity extends AppCompatActivity {
 
     private void showDeleteSetDialog(String id) {
         PopupDialog.getInstance(ViewSetActivity.this)
-                .setStyle(Styles.STANDARD)
+                .standardDialogBuilder()
+                .createStandardDialog()
                 .setHeading(getString(R.string.delete_set))
                 .setDescription(getString(R.string.delete_set_description))
-                .setPopupDialogIcon(R.drawable.ic_delete)
-                .setCancelable(true)
-                .showDialog(new OnDialogButtonClickListener() {
+                .setIcon(R.drawable.ic_delete)
+                .build(new StandardDialogActionListener() {
                     @Override
-                    public void onPositiveClicked(Dialog dialog) {
-                        super.onPositiveClicked(dialog);
+                    public void onPositiveButtonClicked(Dialog dialog) {
                         deleteSet(id);
                     }
 
                     @Override
-                    public void onNegativeClicked(Dialog dialog) {
-                        super.onNegativeClicked(dialog);
+                    public void onNegativeButtonClicked(Dialog dialog) {
                         dialog.dismiss();
                     }
-                });
+                })
+                .show();
     }
 
     private void deleteSet(String id) {
         FlashCardDAO flashCardDAO = new FlashCardDAO(ViewSetActivity.this);
         if (flashCardDAO.deleteFlashcardAndCards(id)) {
             PopupDialog.getInstance(ViewSetActivity.this)
-                    .setStyle(Styles.SUCCESS)
+                    .statusDialogBuilder()
+                    .createSuccessDialog()
                     .setHeading(getString(R.string.success))
                     .setDescription(getString(R.string.delete_set_success))
-                    .setCancelable(false)
-                    .setDismissButtonText(getString(R.string.ok))
-                    .showDialog(new OnDialogButtonClickListener() {
-                        @Override
-                        public void onDismissClicked(Dialog dialog) {
-                            super.onDismissClicked(dialog);
-                            finish();
-                        }
-                    });
+                    .build(Dialog::dismiss)
+                    .show();
         } else {
             PopupDialog.getInstance(ViewSetActivity.this)
-                    .setStyle(Styles.FAILED)
+                    .statusDialogBuilder()
+                    .createErrorDialog()
                     .setHeading(getString(R.string.error))
                     .setDescription(getString(R.string.delete_set_error))
-                    .setCancelable(true)
-                    .showDialog(new OnDialogButtonClickListener() {
-                        @Override
-                        public void onPositiveClicked(Dialog dialog) {
-                            super.onPositiveClicked(dialog);
-                        }
-                    });
+                    .build(Dialog::dismiss)
+                    .show();
         }
     }
 

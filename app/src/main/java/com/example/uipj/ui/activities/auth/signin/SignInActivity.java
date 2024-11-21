@@ -23,9 +23,7 @@ import com.example.uipj.databinding.DialogForgotUsernameBinding;
 import com.example.uipj.preferen.UserSharePreferences;
 import com.example.uipj.ui.activities.MainActivity;
 import com.example.uipj.ui.activities.auth.AuthenticationActivity;
-import com.saadahmedsoft.popupdialog.PopupDialog;
-import com.saadahmedsoft.popupdialog.Styles;
-import com.saadahmedsoft.popupdialog.listener.OnDialogButtonClickListener;
+import com.saadahmedev.popupdialog.PopupDialog;
 
 public class SignInActivity extends AppCompatActivity {
     private User user;
@@ -165,18 +163,12 @@ public class SignInActivity extends AppCompatActivity {
     private void handleUserStatus(User user) {
         if (user.getStatus() == 0) {
             PopupDialog.getInstance(SignInActivity.this)
-                    .setStyle(Styles.FAILED)
+                    .statusDialogBuilder()
+                    .createErrorDialog()
                     .setHeading(getString(R.string.loginFailed))
                     .setDescription(getString(R.string.you_are_blocked))
-                    .setPopupDialogIcon(R.drawable.ic_delete)
-                    .setCancelable(true)
-                    .showDialog(new OnDialogButtonClickListener() {
-                        @Override
-                        public void onDismissClicked(Dialog dialog) {
-                            super.onDismissClicked(dialog);
-                            dialog.dismiss();
-                        }
-                    });
+                    .build(Dialog::dismiss)
+                    .show();
 
         } else {
             UserSharePreferences userSharePreferences = new UserSharePreferences(SignInActivity.this);

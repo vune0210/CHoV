@@ -1,10 +1,10 @@
-package com.daominh.quickmem.adapter.card
+package com.example.uipj.adapter.card
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.daominh.quickmem.data.model.Card
-import com.daominh.quickmem.databinding.ItemLearnSetBinding
+import com.example.uipj.data.model.Card
+import com.example.uipj.databinding.ItemLearnSetBinding
 
 class CardLeanAdapter(
     private var cardList: List<Card>

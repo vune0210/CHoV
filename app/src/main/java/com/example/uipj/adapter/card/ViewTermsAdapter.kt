@@ -1,12 +1,12 @@
-package com.daominh.quickmem.adapter.card
+package com.example.uipj.adapter.card
 
 import android.speech.tts.TextToSpeech
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.daominh.quickmem.data.model.Card
-import com.daominh.quickmem.databinding.ItemViewTermsBinding
+import com.example.uipj.data.model.Card
+import com.example.uipj.databinding.ItemViewTermsBinding
 import kotlin.collections.ArrayList
 
 class ViewTermsAdapter(

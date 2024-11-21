@@ -1,4 +1,4 @@
-package com.daominh.quickmem.ui.activities.learn
+package com.example.uipj.ui.activities.learn
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -8,16 +8,14 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.daominh.quickmem.R
-import com.daominh.quickmem.data.dao.CardDAO
-import com.daominh.quickmem.data.dao.FlashCardDAO
-import com.daominh.quickmem.data.model.Card
-import com.daominh.quickmem.databinding.ActivityQuizBinding
-import com.daominh.quickmem.databinding.DialogCorrectBinding
-import com.daominh.quickmem.databinding.DialogWrongBinding
-import com.saadahmedsoft.popupdialog.PopupDialog
-import com.saadahmedsoft.popupdialog.Styles
-import com.saadahmedsoft.popupdialog.listener.OnDialogButtonClickListener
+import com.example.uipj.R
+import com.example.uipj.data.dao.CardDAO
+import com.example.uipj.data.dao.FlashCardDAO
+import com.example.uipj.data.model.Card
+import com.example.uipj.databinding.ActivityQuizBinding
+import com.example.uipj.databinding.DialogCorrectBinding
+import com.example.uipj.databinding.DialogWrongBinding
+import com.saadahmedev.popupdialog.PopupDialog
 import kotlinx.coroutines.*
 
 class QuizActivity : AppCompatActivity() {
@@ -128,22 +126,13 @@ class QuizActivity : AppCompatActivity() {
 
     private fun finishQuiz() { //1 quiz, 2 learn
         runOnUiThread {
-
             PopupDialog.getInstance(this)
-                .setStyle(Styles.SUCCESS)
+                .statusDialogBuilder()
+                .createSuccessDialog()
                 .setHeading(getString(R.string.finish))
                 .setDescription(getString(R.string.finish_quiz))
-                .setDismissButtonText(getString(R.string.ok))
-                .setNegativeButtonText(getString(R.string.cancel))
-                .setPositiveButtonText(getString(R.string.ok))
-                .setCancelable(true)
-                .showDialog(object : OnDialogButtonClickListener() {
-                    override fun onDismissClicked(dialog: Dialog?) {
-                        super.onDismissClicked(dialog)
-                        dialog?.dismiss()
-                        finish()
-                    }
-                })
+                .build(Dialog::dismiss)
+                .show();
         }
 
     }

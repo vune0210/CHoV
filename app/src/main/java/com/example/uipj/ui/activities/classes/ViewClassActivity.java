@@ -25,9 +25,9 @@ import com.example.uipj.preferen.UserSharePreferences;
 import com.google.android.material.tabs.TabLayout;
 import com.kennyc.bottomsheet.BottomSheetListener;
 import com.kennyc.bottomsheet.BottomSheetMenuDialogFragment;
-import com.saadahmedsoft.popupdialog.PopupDialog;
-import com.saadahmedsoft.popupdialog.Styles;
-import com.saadahmedsoft.popupdialog.listener.OnDialogButtonClickListener;
+import com.saadahmedev.popupdialog.PopupDialog;
+import com.saadahmedev.popupdialog.listener.StandardDialogActionListener;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -111,36 +111,24 @@ public class ViewClassActivity extends AppCompatActivity {
                                     holderAddMember();
                                 } else {
                                     PopupDialog.getInstance(ViewClassActivity.this)
-                                            .setStyle(Styles.FAILED)
-                                            .setHeading("Error!")
+                                            .statusDialogBuilder()
+                                            .createErrorDialog()
+                                            .setHeading("Error")
                                             .setDescription("You are not the owner of this class!")
-                                            .setPositiveButtonText("OK")
-                                            .setCancelable(true)
-                                            .showDialog(new OnDialogButtonClickListener() {
-                                                @Override
-                                                public void onDismissClicked(Dialog dialog) {
-                                                    super.onDismissClicked(dialog);
-                                                    dialog.dismiss();
-                                                }
-                                            });
+                                            .build(Dialog::dismiss)
+                                            .show();
                                 }
                             } else if (menuItem.getItemId() == R.id.add_sets) {
                                 if (isOwner()) {
                                     handleAddSets();
                                 } else {
                                     PopupDialog.getInstance(ViewClassActivity.this)
-                                            .setStyle(Styles.FAILED)
-                                            .setHeading("Error!")
+                                            .statusDialogBuilder()
+                                            .createErrorDialog()
+                                            .setHeading("Error")
                                             .setDescription("You are not the owner of this class!")
-                                            .setPositiveButtonText("OK")
-                                            .setCancelable(true)
-                                            .showDialog(new OnDialogButtonClickListener() {
-                                                @Override
-                                                public void onDismissClicked(Dialog dialog) {
-                                                    super.onDismissClicked(dialog);
-                                                    dialog.dismiss();
-                                                }
-                                            });
+                                            .build(Dialog::dismiss)
+                                            .show();
                                 }
 
                             } else if (menuItem.getItemId() == R.id.edit_class) {
@@ -148,18 +136,12 @@ public class ViewClassActivity extends AppCompatActivity {
                                     handleEditClass();
                                 } else {
                                     PopupDialog.getInstance(ViewClassActivity.this)
-                                            .setStyle(Styles.FAILED)
-                                            .setHeading("Error!")
+                                            .statusDialogBuilder()
+                                            .createErrorDialog()
+                                            .setHeading("Error")
                                             .setDescription("You are not the owner of this class!")
-                                            .setPositiveButtonText("OK")
-                                            .setCancelable(true)
-                                            .showDialog(new OnDialogButtonClickListener() {
-                                                @Override
-                                                public void onDismissClicked(Dialog dialog) {
-                                                    super.onDismissClicked(dialog);
-                                                    dialog.dismiss();
-                                                }
-                                            });
+                                            .build(Dialog::dismiss)
+                                            .show();
                                 }
 
                             } else if (menuItem.getItemId() == R.id.delete_class) {
@@ -167,87 +149,59 @@ public class ViewClassActivity extends AppCompatActivity {
                                     handleDeleteClass();
                                 } else {
                                     PopupDialog.getInstance(ViewClassActivity.this)
-                                            .setStyle(Styles.FAILED)
-                                            .setHeading("Error!")
+                                            .statusDialogBuilder()
+                                            .createErrorDialog()
+                                            .setHeading("Error")
                                             .setDescription("You are not the owner of this class!")
-                                            .setPositiveButtonText("OK")
-                                            .setCancelable(true)
-                                            .showDialog(new OnDialogButtonClickListener() {
-                                                @Override
-                                                public void onDismissClicked(Dialog dialog) {
-                                                    super.onDismissClicked(dialog);
-                                                    dialog.dismiss();
-                                                }
-                                            });
+                                            .build(Dialog::dismiss)
+                                            .show();
                                 }
 
                             } else if (menuItem.getItemId() == R.id.leave_class) {
                                 if (!isOwner()) {
                                     PopupDialog.getInstance(ViewClassActivity.this)
-                                            .setStyle(Styles.STANDARD)
+                                            .standardDialogBuilder()
+                                            .createStandardDialog()
                                             .setHeading("Are you sure?")
-                                            .setDescription("You will loss access to this class!")
-                                            .setPositiveButtonText("Yes")
-                                            .setPopupDialogIcon(R.drawable.baseline_logout_24)
-                                            .setNegativeButtonText("Cancel")
-                                            .setCancelable(true)
-                                            .showDialog(new OnDialogButtonClickListener() {
+                                            .setDescription("You will lose access to this class!")
+                                            .setIcon(R.drawable.baseline_logout_24)
+                                            .build(new StandardDialogActionListener() {
                                                 @Override
-                                                public void onPositiveClicked(Dialog dialog) {
-                                                    super.onPositiveClicked(dialog);
+                                                public void onPositiveButtonClicked(Dialog dialog) {
                                                     UserDAO userDAO = new UserDAO(ViewClassActivity.this);
                                                     if (userDAO.removeUserFromClass(userSharePreference.getId(), userSharePreference.getClassId()) > 0L) {
                                                         PopupDialog.getInstance(ViewClassActivity.this)
-                                                                .setStyle(Styles.SUCCESS)
+                                                                .statusDialogBuilder()
+                                                                .createSuccessDialog()
                                                                 .setHeading("Leave!")
-                                                                .setDescription("Your class has been leave!.")
-                                                                .setDismissButtonText("OK")
-                                                                .setCancelable(true)
-                                                                .showDialog(new OnDialogButtonClickListener() {
-                                                                    @Override
-                                                                    public void onDismissClicked(Dialog dialog) {
-                                                                        super.onDismissClicked(dialog);
-                                                                        dialog.dismiss();
-                                                                        finish();
-                                                                    }
-                                                                });
+                                                                .setDescription("Your class has left!.")
+                                                                .build(Dialog::dismiss)
+                                                                .show();
                                                     } else {
                                                         PopupDialog.getInstance(ViewClassActivity.this)
-                                                                .setStyle(Styles.FAILED)
-                                                                .setHeading("Error!")
+                                                                .statusDialogBuilder()
+                                                                .createErrorDialog()
+                                                                .setHeading("Error")
                                                                 .setDescription("Something went wrong!")
-                                                                .setPositiveButtonText("OK")
-                                                                .setCancelable(true)
-                                                                .showDialog(new OnDialogButtonClickListener() {
-                                                                    @Override
-                                                                    public void onDismissClicked(Dialog dialog) {
-                                                                        super.onDismissClicked(dialog);
-                                                                        dialog.dismiss();
-                                                                    }
-                                                                });
+                                                                .build(Dialog::dismiss)
+                                                                .show();
                                                     }
                                                 }
 
                                                 @Override
-                                                public void onNegativeClicked(Dialog dialog) {
-                                                    super.onNegativeClicked(dialog);
+                                                public void onNegativeButtonClicked(Dialog dialog) {
                                                     dialog.dismiss();
                                                 }
-                                            });
+                                            })
+                                            .show();
                                 } else {
                                     PopupDialog.getInstance(ViewClassActivity.this)
-                                            .setStyle(Styles.FAILED)
-                                            .setHeading("Error!")
+                                            .statusDialogBuilder()
+                                            .createErrorDialog()
+                                            .setHeading("Error")
                                             .setDescription("You are the owner of this class!")
-                                            .setPositiveButtonText("OK")
-                                            .setCancelable(true)
-                                            .showDialog(new OnDialogButtonClickListener() {
-                                                @Override
-                                                public void onDismissClicked(Dialog dialog) {
-                                                    super.onDismissClicked(dialog);
-                                                    dialog.dismiss();
-                                                }
-                                            });
+                                            .build(Dialog::dismiss)
+                                            .show();
                                 }
                             }
                         }
@@ -279,56 +233,40 @@ public class ViewClassActivity extends AppCompatActivity {
     }
 
     private void handleDeleteClass() {
-        PopupDialog.getInstance(this)
-                .setStyle(Styles.STANDARD)
+        PopupDialog.getInstance(ViewClassActivity.this)
+                .standardDialogBuilder()
+                .createStandardDialog()
                 .setHeading("Are you sure?")
                 .setDescription("You will not be able to recover this class!")
-                .setPositiveButtonText("Yes")
-                .setPopupDialogIcon(R.drawable.ic_delete)
-                .setNegativeButtonText("Cancel")
-                .setCancelable(true)
-                .showDialog(new OnDialogButtonClickListener() {
+                .setIcon(R.drawable.ic_delete)
+                .build(new StandardDialogActionListener() {
                     @Override
-                    public void onPositiveClicked(Dialog dialog) {
-                        super.onPositiveClicked(dialog);
+                    public void onPositiveButtonClicked(Dialog dialog) {
                         if (groupDAO.deleteClass(id) > 0L) {
                             PopupDialog.getInstance(ViewClassActivity.this)
-                                    .setStyle(Styles.SUCCESS)
+                                    .statusDialogBuilder()
+                                    .createSuccessDialog()
                                     .setHeading("Deleted!")
                                     .setDescription("Your class has been deleted.")
-                                    .setDismissButtonText("OK")
-                                    .setCancelable(true)
-                                    .showDialog(new OnDialogButtonClickListener() {
-                                        @Override
-                                        public void onDismissClicked(Dialog dialog) {
-                                            super.onDismissClicked(dialog);
-                                            dialog.dismiss();
-                                            finish();
-                                        }
-                                    });
+                                    .build(Dialog::dismiss)
+                                    .show();
                         } else {
                             PopupDialog.getInstance(ViewClassActivity.this)
-                                    .setStyle(Styles.FAILED)
-                                    .setHeading("Error!")
+                                    .statusDialogBuilder()
+                                    .createErrorDialog()
+                                    .setHeading("Error")
                                     .setDescription("Something went wrong!")
-                                    .setPositiveButtonText("OK")
-                                    .setCancelable(true)
-                                    .showDialog(new OnDialogButtonClickListener() {
-                                        @Override
-                                        public void onDismissClicked(Dialog dialog) {
-                                            super.onDismissClicked(dialog);
-                                            dialog.dismiss();
-                                        }
-                                    });
+                                    .build(Dialog::dismiss)
+                                    .show();
                         }
                     }
 
                     @Override
-                    public void onNegativeClicked(Dialog dialog) {
-                        super.onNegativeClicked(dialog);
+                    public void onNegativeButtonClicked(Dialog dialog) {
                         dialog.dismiss();
                     }
-                });
+                })
+                .show();
     }
 
     private void holderAddMember() {

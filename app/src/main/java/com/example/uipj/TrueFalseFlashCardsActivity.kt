@@ -11,9 +11,7 @@ import com.example.uipj.data.model.Card
 import com.example.uipj.databinding.ActivityTrueFalseFlashCardsBinding
 import com.example.uipj.databinding.DialogCorrectBinding
 import com.example.uipj.databinding.DialogWrongBinding
-import com.saadahmedsoft.popupdialog.PopupDialog
-import com.saadahmedsoft.popupdialog.Styles
-import com.saadahmedsoft.popupdialog.listener.OnDialogButtonClickListener
+import com.saadahmedev.popupdialog.PopupDialog
 
 class TrueFalseFlashCardsActivity : AppCompatActivity() {
     private val binding by lazy { ActivityTrueFalseFlashCardsBinding.inflate(layoutInflater) }
@@ -82,22 +80,14 @@ class TrueFalseFlashCardsActivity : AppCompatActivity() {
 
     private fun finishQuiz() { //1 quiz, 2 learn
         runOnUiThread {
-
             PopupDialog.getInstance(this)
-                .setStyle(Styles.SUCCESS)
-                .setHeading(getString(R.string.finish))
-                .setDescription(getString(R.string.finish_quiz))
-                .setDismissButtonText(getString(R.string.ok))
-                .setNegativeButtonText(getString(R.string.cancel))
-                .setPositiveButtonText(getString(R.string.ok))
-                .setCancelable(true)
-                .showDialog(object : OnDialogButtonClickListener() {
-                    override fun onDismissClicked(dialog: Dialog?) {
-                        super.onDismissClicked(dialog)
-                        dialog?.dismiss()
-                        finish()
-                    }
-                })
+                .statusDialogBuilder()
+                .createSuccessDialog()
+                .setHeading("Well Done")
+                .setDescription("You have successfully" +
+                        " completed the task")
+                .build(Dialog::dismiss)
+                .show();
         }
 
     }

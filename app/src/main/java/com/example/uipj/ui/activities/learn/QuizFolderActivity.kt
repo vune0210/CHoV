@@ -18,9 +18,7 @@ import com.example.uipj.databinding.ActivityQuizBinding
 import com.example.uipj.databinding.ActivityQuizFolderBinding
 import com.example.uipj.databinding.DialogCorrectBinding
 import com.example.uipj.databinding.DialogWrongBinding
-import com.saadahmedsoft.popupdialog.PopupDialog
-import com.saadahmedsoft.popupdialog.Styles
-import com.saadahmedsoft.popupdialog.listener.OnDialogButtonClickListener
+import com.saadahmedev.popupdialog.PopupDialog
 import kotlinx.coroutines.*
 
 class QuizFolderActivity : AppCompatActivity() {
@@ -157,19 +155,13 @@ class QuizFolderActivity : AppCompatActivity() {
         runOnUiThread {
             if (status == 1) {
                 PopupDialog.getInstance(this)
-                    .setStyle(Styles.SUCCESS)
-                    .setHeading(getString(R.string.finish))
-                    .setDescription(getString(R.string.finish_quiz))
-                    .setDismissButtonText(getString(R.string.ok))
-                    .setCancelable(true)
-                    .showDialog(object : OnDialogButtonClickListener() {
-                        override fun onDismissClicked(dialog: Dialog?) {
-                            super.onDismissClicked(dialog)
-                            dialog?.dismiss()
-                            dialogCorrect?.create()?.dismiss()
-                            finish()
-                        }
-                    })
+                    .statusDialogBuilder()
+                    .createSuccessDialog()
+                    .setHeading("Well Done")
+                    .setDescription("You have successfully" +
+                            " completed the task")
+                    .build(Dialog::dismiss)
+                    .show();
             }
         }
 

@@ -24,9 +24,8 @@ import com.example.uipj.ui.activities.profile.change.ChangePasswordActivity;
 import com.example.uipj.ui.activities.profile.change.ChangeUsernameActivity;
 import com.example.uipj.ui.activities.set.ViewSetActivity;
 import com.example.uipj.utils.PasswordHasher;
-import com.saadahmedsoft.popupdialog.PopupDialog;
-import com.saadahmedsoft.popupdialog.Styles;
-import com.saadahmedsoft.popupdialog.listener.OnDialogButtonClickListener;
+import com.saadahmedev.popupdialog.PopupDialog;
+import com.saadahmedev.popupdialog.listener.StandardDialogActionListener;
 
 import java.util.Objects;
 
@@ -62,16 +61,15 @@ public class SettingsActivity extends AppCompatActivity {
 
         binding.logOutBtn.setOnClickListener(v -> {
             PopupDialog.getInstance(SettingsActivity.this)
-                    .setStyle(Styles.STANDARD)
-                    .setHeading("Log out!")
-                    .setDescription("Are you sure")
-                    .setPopupDialogIcon(R.drawable.baseline_logout_24)
-                    .setCancelable(true)
-                    .setPositiveButtonText("OK")
-                    .showDialog(new OnDialogButtonClickListener() {
+                    .standardDialogBuilder()
+                    .createStandardDialog()
+                    .setHeading("Logout")
+                    .setDescription("Are you sure you want to logout?" +
+                            " This action cannot be undone")
+                    .setIcon(R.drawable.baseline_logout_24)
+                    .build(new StandardDialogActionListener() {
                         @Override
-                        public void onPositiveClicked(Dialog dialog) {
-                            super.onPositiveClicked(dialog);
+                        public void onPositiveButtonClicked(Dialog dialog) {
                             userSharePreferences = new UserSharePreferences(SettingsActivity.this);
                             userSharePreferences.clear();
                             Intent intent = new Intent(SettingsActivity.this, SignInActivity.class);
@@ -83,13 +81,11 @@ public class SettingsActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onNegativeClicked(Dialog dialog) {
-                            super.onNegativeClicked(dialog);
+                        public void onNegativeButtonClicked(Dialog dialog) {
                             dialog.dismiss();
                         }
-                    });
-
-
+                    })
+                    .show();
         });
     }
 

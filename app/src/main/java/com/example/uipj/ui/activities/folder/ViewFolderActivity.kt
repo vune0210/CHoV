@@ -4,15 +4,13 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.uipj.ui.activities.set.AddFlashCardActivity
-import com.example.uipj.ui.activities.learn.QuizFolderActivity
 import com.example.uipj.R
 import com.example.uipj.adapter.flashcard.SetFolderViewAdapter
 import com.example.uipj.data.dao.FolderDAO
@@ -20,12 +18,14 @@ import com.example.uipj.data.model.FlashCard
 import com.example.uipj.databinding.ActivityViewFolderBinding
 import com.example.uipj.databinding.DialogCreateFolderBinding
 import com.example.uipj.preferen.UserSharePreferences
+import com.example.uipj.ui.activities.learn.QuizFolderActivity
+import com.example.uipj.ui.activities.set.AddFlashCardActivity
 import com.kennyc.bottomsheet.BottomSheetListener
 import com.kennyc.bottomsheet.BottomSheetMenuDialogFragment
-import com.saadahmedsoft.popupdialog.PopupDialog
-import com.saadahmedsoft.popupdialog.Styles
-import com.saadahmedsoft.popupdialog.listener.OnDialogButtonClickListener
+import com.saadahmedev.popupdialog.PopupDialog
+import com.saadahmedev.popupdialog.listener.StandardDialogActionListener
 import com.squareup.picasso.Picasso
+
 
 class ViewFolderActivity : AppCompatActivity(), BottomSheetListener {
     private val binding by lazy { ActivityViewFolderBinding.inflate(layoutInflater) }
@@ -136,48 +136,37 @@ class ViewFolderActivity : AppCompatActivity(), BottomSheetListener {
 
     private fun handleDeleteFolder() {
         PopupDialog.getInstance(this)
-            .setStyle(Styles.STANDARD)
+            .standardDialogBuilder()
+            .createStandardDialog()
             .setHeading("Delete Folder")
             .setDescription("Are you sure you want to delete this folder?")
-            .setPopupDialogIcon(R.drawable.ic_delete)
-            .setCancelable(true)
-            .showDialog(
-                object : OnDialogButtonClickListener() {
-                    override fun onPositiveClicked(dialog: Dialog?) {
-                        super.onPositiveClicked(dialog)
-                        if (folderDAO.deleteFolder(intent.getStringExtra("id")) > 0L) {
-                            PopupDialog.getInstance(this@ViewFolderActivity)
-                                .setStyle(Styles.SUCCESS)
-                                .setHeading(getString(R.string.success))
-                                .setDescription(getString(R.string.delete_set_success))
-                                .setCancelable(false)
-                                .setDismissButtonText(getString(R.string.ok))
-                                .showDialog(object : OnDialogButtonClickListener() {
-                                    override fun onDismissClicked(dialog: Dialog) {
-                                        super.onDismissClicked(dialog)
-                                        finish()
-                                    }
-                                })
-                        } else {
-                            PopupDialog.getInstance(this@ViewFolderActivity)
-                                .setStyle(Styles.FAILED)
-                                .setHeading(getString(R.string.error))
-                                .setDescription(getString(R.string.delete_set_error))
-                                .setCancelable(true)
-                                .showDialog(object : OnDialogButtonClickListener() {
-                                    override fun onPositiveClicked(dialog: Dialog) {
-                                        super.onPositiveClicked(dialog)
-                                    }
-                                })
-                        }
-                    }
-
-                    override fun onNegativeClicked(dialog: Dialog?) {
-                        super.onNegativeClicked(dialog)
-                        dialog?.dismiss()
+            .setIcon(R.drawable.ic_delete)
+            .build(object : StandardDialogActionListener {
+                override fun onPositiveButtonClicked(dialog: Dialog) {
+                    if (folderDAO.deleteFolder(intent.getStringExtra("id")) > 0L) {
+                        PopupDialog.getInstance(this@ViewFolderActivity)
+                            .statusDialogBuilder()
+                            .createSuccessDialog()
+                            .setHeading("Success")
+                            .setDescription("Delete successfully")
+                            .build(Dialog::dismiss)
+                            .show();
+                    } else {
+                        PopupDialog.getInstance(this@ViewFolderActivity)
+                            .statusDialogBuilder()
+                            .createErrorDialog()
+                            .setHeading(getString(R.string.error))
+                            .setDescription(getString(R.string.delete_set_error))
+                            .build(Dialog::dismiss)
+                            .show();
                     }
                 }
-            )
+
+                override fun onNegativeButtonClicked(dialog: Dialog) {
+                    dialog.dismiss()
+                }
+            })
+            .show()
     }
 
     @SuppressLint("SetTextI18n")
