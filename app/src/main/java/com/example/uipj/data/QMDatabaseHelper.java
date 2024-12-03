@@ -3,6 +3,11 @@ package com.example.uipj.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.InputStreamReader;
 
 public class QMDatabaseHelper extends SQLiteOpenHelper {
     //create database name and version
@@ -101,9 +106,11 @@ public class QMDatabaseHelper extends SQLiteOpenHelper {
             "UNIQUE(folder_id, flashcard_id)" +
             ");";
 
+    private static Context context;
     //constructor
     public QMDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -118,6 +125,45 @@ public class QMDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_FOLDERS_FLASHCARDS);
 
         db.execSQL("INSERT INTO users VALUES('1','admin','admin12345@gmail.com','admin','41e5653fc7aeb894026d6bb7b2db7f65902b454945fa8fd65a6327047b5277fb','',0,'2023/11/19','2023/11/19',1)");
+
+        try {
+            /** FileReader file = new FileReader(context.getAssets().open("chov_cards.csv"));
+            BufferedReader buffer = new BufferedReader(file);
+             **/
+            BufferedReader buffer = new BufferedReader(
+                    new InputStreamReader(context.getAssets().open("chov_cards.csv")));
+
+            String line = "";
+            String tableName ="cards";
+            String columns = "id, front, back, flashcard_id, status, is_learned, created_at, updated_at";
+            String str1 = "INSERT INTO " + tableName + " (" + columns + ") values(";
+            String str2 = ");";
+
+            db.beginTransaction();
+            try {
+                while ((line = buffer.readLine()) != null) {
+                    StringBuilder sb = new StringBuilder(str1);
+                    String[] str = line.split(",");
+                    sb.append(str[0] + ",");
+                    sb.append(str[1] + ",");
+                    sb.append(str[2] + ",");
+                    sb.append(str[3] + ",");
+                    sb.append(str[4] + ",");
+                    sb.append(str[5] + ",");
+                    sb.append(str[6] + ",");
+                    sb.append(str[7]);
+                    sb.append(str2);
+                    db.execSQL(sb.toString());
+                }
+            } catch (Exception e) {
+                Log.e("cards import", "exception", e);
+            }
+
+            db.setTransactionSuccessful();
+            db.endTransaction();
+        } catch (Exception e) {
+            Log.e("file not found", "exception", e);
+        }
     }
 
     @Override
