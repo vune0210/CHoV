@@ -28,29 +28,9 @@
                     android:layout_height="match_parent"
                     android:background="#3F51B5">
 
-                    <ImageView
-                        android:id="@+id/imageView15"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0"
-                        app:srcCompat="@drawable/ic_profile_foreground" />
 
-                    <ImageView
-                        android:id="@+id/imageView13"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:srcCompat="@android:drawable/ic_popup_reminder"
-                        tools:layout_editor_absoluteY="18dp"
-                        tools:ignore="MissingConstraints" />
+
+
 
                     <TextView
                         android:id="@+id/textView"
@@ -59,9 +39,9 @@
                         android:text=""
                         android:textColor="@color/white"
                         android:textSize="@dimen/_20sp"
-                        tools:layout_editor_absoluteX="77dp"
-                        tools:layout_editor_absoluteY="23dp"
-                        tools:ignore="MissingConstraints" />
+                        tools:ignore="MissingConstraints"
+                        tools:layout_editor_absoluteX="dp"
+                        tools:layout_editor_absoluteY="0dp" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
@@ -70,21 +50,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="10dp"
-                    android:text="Hi, "
+                    android:text="Find your favorites\nHere"
                     android:textColor="@color/white"
                     android:textSize="30sp"
                     android:textStyle="bold"
-                    />
-                <TextView
-                    android:id="@+id/textView2_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/name_profile"
-                    android:textColor="@color/white"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
+
+
                     />
 
                 <EditText
@@ -95,7 +66,7 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="32dp"
                     android:layout_marginBottom="16dp"
-                    android:background="@drawable/background_search"
+                    android:background="@drawable/search_home_backgroud"
                     android:drawableStart="@drawable/ic_search"
                     android:ems="20"
                     android:hint="  Search.."
@@ -159,7 +130,7 @@
                                 android:id="@+id/textView5"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Topic A"
+                                android:text="Ẩm thực"
                                 android:textAlignment="center"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -197,7 +168,7 @@
                                 android:id="@+id/textView6"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Topic B"
+                                android:text="  Văn hóa"
                                 android:textAlignment="center"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -235,7 +206,7 @@
                                 android:id="@+id/textView7"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Topic C"
+                                android:text="Lịch sử"
                                 android:textAlignment="center"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -264,7 +235,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="@dimen/_10dp"
                     android:text="Recent activity"
-                    android:textColor="@color/colorRed"
+                    android:textColor="@color/azure_blue"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
@@ -284,41 +255,12 @@
                     android:inputType="text"
 
                     android:padding="16dp"
-                    android:text="Topic VietnamHistory"
-                    android:textColor="@color/white"
+                    android:text="Ẩm thực"
 
                     android:textColorHint="@color/white" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="15dp"
-                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/textView11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="32dp"
-                        android:layout_weight="1"
-                        android:text=" Topic A"
-                        android:textColor="@color/azure_blue"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textView9"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="32dp"
-                        android:layout_weight="1"
-                        android:text="ViewAll"
-                        android:textAlignment="viewEnd"
-                        android:textColor="@color/azure_blue"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
+                android:textColor="@color/white"
 
                 <LinearLayout
                     android:id="@+id/linearLayout"
@@ -355,9 +297,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent"
                                     app:srcCompat="@drawable/flashcard_small" />
 
                             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -366,7 +305,7 @@
                                 android:id="@+id/textView8"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="FlashCard A"
+                                android:text="Hà Nội"
                                 android:textAlignment="center"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -404,7 +343,7 @@
                                 android:id="@+id/textView10"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="FlashCard B"
+                                android:text="Ninh Bình"
                                 android:textAlignment="center"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -442,7 +381,7 @@
                                 android:id="@+id/textView4"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="FlashCard C"
+                                android:text="Đà Nẵng"
                                 android:textAlignment="center"
                                 android:textStyle="bold" />
                         </LinearLayout>

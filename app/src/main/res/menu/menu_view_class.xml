@@ -5,9 +5,10 @@
             android:icon="@drawable/add_user"
             android:title="@string/add_member"/>
     <item
-            android:id="@+id/add_sets"
-            android:icon="@drawable/copy"
-            android:title="@string/add_sets"/>
+        android:id="@+id/add_sets"
+        android:icon="@drawable/copy"
+        android:title="@string/add_sets"
+        android:visible="true" />
     <item
             android:id="@+id/edit_class"
             android:title="@string/edit_class"

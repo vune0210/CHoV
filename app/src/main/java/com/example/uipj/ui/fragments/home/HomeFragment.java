@@ -1,6 +1,5 @@
 package com.example.uipj.ui.fragments.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.uipj.databinding.FragmentHomeBinding;
-import com.example.uipj.ui.activities.create.CreateSetActivity;
 import com.example.uipj.ui.home.HomeViewModel;
 
 public class HomeFragment extends Fragment {
@@ -42,9 +40,6 @@ public class HomeFragment extends Fragment {
             } else {
                 child.setOnClickListener(v -> {
                     String idName = getResources().getResourceEntryName(v.getId());
-                    if (idName.equals("imageView2")) {
-                        startActivity(new Intent(getActivity(), TopicFragment.class));
-                    }
                     Toast.makeText(getContext(), "Nút có ID là " + idName + " đã được kích hoạt", Toast.LENGTH_SHORT).show();
                 });
             }

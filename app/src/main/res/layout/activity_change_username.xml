@@ -29,13 +29,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <EditText
-            android:id="@+id/username_et"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/round_edittext_setting_change"
-            android:hint="New username"
-            android:paddingLeft="@dimen/_15ssp" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:id="@+id/username_et"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/round_edittext_setting_change"
+        android:hint="User name"
+        android:paddingLeft="@dimen/_15ssp"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="96dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="217dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
